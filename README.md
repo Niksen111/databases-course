@@ -1,4 +1,4 @@
-# databases-curse
+# databases-course
 SPbSU course on databases.
 ## Structure
   - pets_set_up --> a script to set up the pets database.
