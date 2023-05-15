@@ -37,7 +37,7 @@ CREATE TABLE Card_Owner(
     Card_Owner_ID            INTEGER          NOT NULL,
     First_Name	             VARCHAR(30)      NOT NULL,
     Last_Name                VARCHAR(30)      NOT NULL,
-    Discount                 FLOAT            NOT NULL,
+    Discount                 FLOAT            NOT NULL CHECK ( Discount BETWEEN 0 AND 1),
     City_ID                  INTEGER          NOT NULL,
     CONSTRAINT Card_Owner_PK PRIMARY KEY (Card_Owner_ID),
     CONSTRAINT FK_Card_Owner_City FOREIGN KEY (City_ID)
@@ -60,7 +60,7 @@ CREATE TABLE Purchase(
 CREATE TABLE Product(
     Product_ID              INTEGER         NOT NULL,
     Name	                VARCHAR(50)     NOT NULL,
-    Cost                    FLOAT           NOT NULL,
+    Cost                    FLOAT           NOT NULL CHECK ( Cost >= 0 ),
     Product_Type_ID         INTEGER         NOT NULL,
     Measurement_Unit_ID     INTEGER         NOT NULL,
     CONSTRAINT Product_PK PRIMARY KEY (Product_ID),
@@ -72,7 +72,7 @@ CREATE TABLE Product(
 
 CREATE TABLE Purchase_Product(
     Purchase_Product_ID      INTEGER        NOT NULL,
-    Number	                 FLOAT          NOT NULL,
+    Number	                 FLOAT          NOT NULL CHECK ( Number > 0 ),
     Purchase_ID              INTEGER        NOT NULL,
     Product_ID               INTEGER        NOT NULL,
     CONSTRAINT Purchase_Product_PK PRIMARY KEY (Purchase_Product_ID),
@@ -91,11 +91,4 @@ DROP TABLE Store;
 DROP TABLE City;
 DROP TABLE Measurement_Unit;
 DROP TABLE Product_Type;
-*/
-
--- Ограничения
-/*
-Цена продукта > 0
-Количество продуктов > 0
-Скидка у владельца карты от 0 до 1
 */
