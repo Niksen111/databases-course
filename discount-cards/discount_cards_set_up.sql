@@ -2,7 +2,7 @@
 CREATE DATABASE discount_cards;
 GO
 USE discount_cards;
- */
+*/
 
 CREATE TABLE Product_Type(
     Product_Type_ID         INTEGER         NOT NULL,
@@ -72,7 +72,7 @@ CREATE TABLE Product(
 
 CREATE TABLE Purchase_Product(
     Purchase_Product_ID      INTEGER        NOT NULL,
-    Number	                 FLOAT          NOT NULL CHECK ( Number > 0 ),
+    Amount	                 FLOAT          NOT NULL CHECK ( Amount > 0 ),
     Purchase_ID              INTEGER        NOT NULL,
     Product_ID               INTEGER        NOT NULL,
     CONSTRAINT Purchase_Product_PK PRIMARY KEY (Purchase_Product_ID),
