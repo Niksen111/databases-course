@@ -1,3 +1,7 @@
+---------------------------------------
+-- Filling tables with test data.
+---------------------------------------
+
 INSERT INTO product_type(product_type_id, category, coef_discount)
     VALUES (1, 'Groat', 1.);
 INSERT INTO product_type(product_type_id, category, coef_discount)
@@ -42,26 +46,26 @@ INSERT INTO store(store_id, name, address, city_id)
 INSERT INTO store(store_id, name, address, city_id)
     VALUES (6, 'Super-Giper', '22 Best St', 3);
 
-INSERT INTO Card_Owner (Card_Owner_ID, First_Name, Last_Name, Discount, City_ID, Points)
-    VALUES (1, 'John', 'Doe', 0.2, 1, 0);
-INSERT INTO Card_Owner (Card_Owner_ID, First_Name, Last_Name, Discount, City_ID, Points)
-    VALUES (2, 'Jane', 'Smith', 0.1, 1, 0);
-INSERT INTO Card_Owner (Card_Owner_ID, First_Name, Last_Name, Discount, City_ID, Points)
-    VALUES (3, 'Bob', 'Johnson', 0.3, 1, 0);
-INSERT INTO Card_Owner (Card_Owner_ID, First_Name, Last_Name, Discount, City_ID, Points)
-    VALUES (4, 'Samantha', 'Lee', 0.15, 1, 0);
-INSERT INTO Card_Owner (Card_Owner_ID, First_Name, Last_Name, Discount, City_ID, Points)
-    VALUES (5, 'Michael', 'Nguyen', 0.25, 1, 0);
-INSERT INTO Card_Owner (Card_Owner_ID, First_Name, Last_Name, Discount, City_ID, Points)
-    VALUES (6, 'Emily', 'Wang', 0.2, 2, 0);
-INSERT INTO Card_Owner (Card_Owner_ID, First_Name, Last_Name, Discount, City_ID, Points)
+INSERT INTO Card_Owner (Card_Owner_ID, First_Name, Last_Name, Discount, Store_id, Points)
+    VALUES (1, 'John', 'Doe', 0.2, 2, 0);
+INSERT INTO Card_Owner (Card_Owner_ID, First_Name, Last_Name, Discount, Store_id, Points)
+    VALUES (2, 'Jane', 'Smith', 0.1, 3, 0);
+INSERT INTO Card_Owner (Card_Owner_ID, First_Name, Last_Name, Discount, Store_id, Points)
+    VALUES (3, 'Bob', 'Johnson', 0.3, 4, 0);
+INSERT INTO Card_Owner (Card_Owner_ID, First_Name, Last_Name, Discount, Store_id, Points)
+    VALUES (4, 'Samantha', 'Lee', 0.15, 5, 0);
+INSERT INTO Card_Owner (Card_Owner_ID, First_Name, Last_Name, Discount, Store_id, Points)
+    VALUES (5, 'Michael', 'Nguyen', 0.25, 6, 0);
+INSERT INTO Card_Owner (Card_Owner_ID, First_Name, Last_Name, Discount, Store_id, Points)
+    VALUES (6, 'Emily', 'Wang', 0.2, 1, 0);
+INSERT INTO Card_Owner (Card_Owner_ID, First_Name, Last_Name, Discount, Store_id, Points)
     VALUES (7, 'David', 'Kim', 0.1, 2, 0);
-INSERT INTO Card_Owner (Card_Owner_ID, First_Name, Last_Name, Discount, City_ID, Points)
-    VALUES (8, 'Jessica', 'Garcia', 0.3, 2, 0);
-INSERT INTO Card_Owner (Card_Owner_ID, First_Name, Last_Name, Discount, City_ID, Points)
-    VALUES (9, 'Kevin', 'Chen', 0.15, 3, 0);
-INSERT INTO Card_Owner (Card_Owner_ID, First_Name, Last_Name, Discount, City_ID, Points)
-    VALUES (10, 'Sarah', 'Park', 0.25, 3, 0);
+INSERT INTO Card_Owner (Card_Owner_ID, First_Name, Last_Name, Discount, Store_id, Points)
+    VALUES (8, 'Jessica', 'Garcia', 0.3, 3, 0);
+INSERT INTO Card_Owner (Card_Owner_ID, First_Name, Last_Name, Discount, Store_id, Points)
+    VALUES (9, 'Kevin', 'Chen', 0.15, 4, 0);
+INSERT INTO Card_Owner (Card_Owner_ID, First_Name, Last_Name, Discount, Store_id, Points)
+    VALUES (10, 'Sarah', 'Park', 0.25, 5, 0);
 
 INSERT INTO Purchase (Purchase_ID, Date, Store_ID, Card_Owner_ID)
     VALUES (1, '2022-01-01 10:00:00', 1, 1);

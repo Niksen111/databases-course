@@ -4,6 +4,10 @@ GO
 USE discount_cards;
 */
 
+---------------------------
+-- Table Creation
+---------------------------
+
 CREATE TABLE Product_Type(
     Product_Type_ID         INTEGER         NOT NULL,
     Category	            VARCHAR(30)     NOT NULL,
@@ -37,12 +41,12 @@ CREATE TABLE Card_Owner(
     Card_Owner_ID            INTEGER          NOT NULL,
     First_Name	             VARCHAR(30)      NOT NULL,
     Last_Name                VARCHAR(30)      NOT NULL,
-    Discount                 FLOAT            NOT NULL CHECK ( Discount BETWEEN 0 AND 1),
+    Discount                 FLOAT            NOT NULL CHECK ( Discount BETWEEN 0 AND 1) DEFAULT 0,
     Points                   INTEGER          NOT NULL DEFAULT 0,
-    City_ID                  INTEGER          NOT NULL,
+    Store_ID                  INTEGER          NOT NULL,
     CONSTRAINT Card_Owner_PK PRIMARY KEY (Card_Owner_ID),
-    CONSTRAINT FK_Card_Owner_City FOREIGN KEY (City_ID)
-      REFERENCES City(City_ID)
+    CONSTRAINT FK_Card_Owner_Store FOREIGN KEY (Store_ID)
+      REFERENCES Store(Store_ID)
 );
 
 CREATE TABLE Purchase(
@@ -82,6 +86,18 @@ CREATE TABLE Purchase_Product(
     CONSTRAINT FK_Purchase_Product_Product FOREIGN KEY (Product_ID)
         REFERENCES Product(Product_ID)
 );
+
+---------------------------------------
+-- Indexes creation.
+---------------------------------------
+
+CREATE INDEX idx_purchases ON purchase(card_owner_id, date, store_id);
+CREATE INDEX idx_purchase_product ON purchase_product(product_id, amount, purchase_id);
+CREATE INDEX idx_card_owners ON card_owner(card_owner_id, first_name, last_name, store_id);
+
+---------------------------
+-- Deleting tables.
+---------------------------
 
 /*
 DROP TABLE Purchase_Product;
