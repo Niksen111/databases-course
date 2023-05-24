@@ -38,6 +38,7 @@ CREATE TABLE Card_Owner(
     First_Name	             VARCHAR(30)      NOT NULL,
     Last_Name                VARCHAR(30)      NOT NULL,
     Discount                 FLOAT            NOT NULL CHECK ( Discount BETWEEN 0 AND 1),
+    Points                   INTEGER          NOT NULL,
     City_ID                  INTEGER          NOT NULL,
     CONSTRAINT Card_Owner_PK PRIMARY KEY (Card_Owner_ID),
     CONSTRAINT FK_Card_Owner_City FOREIGN KEY (City_ID)

@@ -16,7 +16,7 @@ BEGIN ATOMIC
         JOIN purchase p2 on p2.purchase_id = pp.purchase_id
         JOIN card_owner co on p2.card_owner_id = co.card_owner_id
         JOIN store s on p2.store_id = s.store_id
-            WHERE p2.date BETWEEN date1 AND date2
+            WHERE p.product_id = id_product AND p2.date BETWEEN date1 AND date2
             ORDER BY p2.date;
 END;
 
@@ -41,3 +41,22 @@ CREATE VIEW card_owners_purchases AS
         JOIN purchase_product pp on p.purchase_id = pp.purchase_id
         JOIN product p2 on pp.product_id = p2.product_id
         JOIN store s on p.store_id = s.store_id;
+
+CREATE VIEW card_owners_stores AS
+    SELECT first_name, last_name, discount, s.name as store, address, c.name as city FROM card_owner
+        JOIN store s on card_owner.city_id = s.city_id
+        JOIN city c on card_owner.city_id = c.city_id;
+
+CREATE INDEX idx_purchases ON purchase(card_owner_id, date, store_id);
+CREATE INDEX idx_purchase_product ON purchase_product(product_id, amount, purchase_id);
+
+/*
+CREATE TRIGGER tr_kek ON FOR UPDATE
+    AS
+    BEGIN
+    END
+; /*
+
+/*
+DROP TRIGGER tr_kek;
+*/
