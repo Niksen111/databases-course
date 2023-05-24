@@ -13,16 +13,17 @@ CREATE OR REPLACE VIEW card_owners_purchases AS
         JOIN purchase_product pp on p.purchase_id = pp.purchase_id
         JOIN product p2 on pp.product_id = p2.product_id;
 
-CREATE OR REPLACE VIEW card_owners_stores AS
-    SELECT first_name, last_name, discount, s.name as store, address, c.name as city FROM card_owner
-        JOIN store s on card_owner.store_id = s.store_id
-        JOIN city c on s.city_id = c.city_id;
-
+CREATE OR REPLACE VIEW stores_clients_number AS
+    SELECT s.name as name, s.address as address, count(card_owner_id) as clinets_number FROM card_owner c
+        RIGHT JOIN store s on s.store_id = c.store_id
+        JOIN city c2 on s.city_id = c2.city_id
+        GROUP BY s.store_id;
 
 ---------------------------------------
 -- Procedures/functions creation.
 ---------------------------------------
 
+-- Adding new card owner.
 CREATE OR REPLACE PROCEDURE AddNewCardOwner(name1 VARCHAR(30), name2 VARCHAR(30), store INTEGER)
 LANGUAGE SQL
 AS $$
@@ -33,11 +34,13 @@ AS $$
         VALUES ((SELECT MAX(card_owner_id) FROM card_owner) + 1, name1, name2, store, 0)
 $$;
 
+-- Calculating of the points of a purchase_product entry.
 CREATE OR REPLACE FUNCTION CalculatePoints(id_purchase_product INTEGER) RETURNS INTEGER
 LANGUAGE SQL
     RETURN (SELECT 10 * discount * amount FROM card_owners_purchases
         WHERE pp_id = id_purchase_product);
 
+-- Updating of the points by the query.
 CREATE OR REPLACE PROCEDURE UpdatePoints(id_purchase_product INTEGER)
 LANGUAGE SQL
 AS $$
@@ -47,6 +50,7 @@ AS $$
                                 WHERE pp_id = id_purchase_product);
 $$;
 
+-- Replace the owner with the default one.
 CREATE OR REPLACE PROCEDURE DefaultCardOwner(id_owner INTEGER, id_store INTEGER)
 LANGUAGE SQL
 AS $$
@@ -55,6 +59,7 @@ AS $$
         WHERE card_owner_id = id_owner;
 $$;
 
+-- Create default owner for the store.
 CREATE OR REPLACE PROCEDURE AddDefaultOwner(id_store INTEGER)
 LANGUAGE SQL
 AS $$
@@ -66,18 +71,24 @@ $$;
 -- Triggers creation.
 ---------------------------------------
 
+-- Updating of the points of a new purchase.
 CREATE OR REPLACE TRIGGER tr_new_purchase_product
     AFTER INSERT ON purchase_product
     FOR EACH ROW
     EXECUTE PROCEDURE UpdatePoints(new.purchase_product_id);
+-- check: INSERT INTO purchase_product VALUES ((SELECT max(purchase_product_id) FROM purchase_product) + 1, 1, 1, 1);
 
+-- Creating default owner for the new store.
 CREATE OR REPLACE TRIGGER tr_new_store
     AFTER INSERT ON store
     EXECUTE PROCEDURE AddDefaultOwner(store_id);
+-- check: INSERT INTO store VALUES ((SELECT max(store_id) FROM store) + 1, 1, 'ABCD', 'EFGH');
 
+-- Default a deleted cardholder.
 CREATE OR REPLACE TRIGGER tr_remove_owner
     BEFORE DELETE ON card_owner
     FOR EACH ROW EXECUTE PROCEDURE DefaultCardOwner(card_owner_id, store_id);
+-- check: DELETE FROM card_owner WHERE card_owner_id = 1;
 
 ---------------------------------------
 -- Deleting additional functional.
