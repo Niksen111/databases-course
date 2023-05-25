@@ -43,7 +43,7 @@ CREATE TABLE Card_Owner(
     Last_Name                VARCHAR(30)      NOT NULL,
     Discount                 FLOAT            NOT NULL CHECK ( Discount BETWEEN 0 AND 1) DEFAULT 0,
     Points                   INTEGER          NOT NULL DEFAULT 0,
-    Store_ID                  INTEGER          NOT NULL,
+    Store_ID                 INTEGER          NOT NULL,
     CONSTRAINT Card_Owner_PK PRIMARY KEY (Card_Owner_ID),
     CONSTRAINT FK_Card_Owner_Store FOREIGN KEY (Store_ID)
       REFERENCES Store(Store_ID)

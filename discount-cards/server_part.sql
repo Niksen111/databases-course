@@ -17,7 +17,8 @@ CREATE OR REPLACE VIEW stores_clients_number AS
     SELECT s.name as name, s.address as address, count(card_owner_id) as clinets_number FROM card_owner c
         RIGHT JOIN store s on s.store_id = c.store_id
         JOIN city c2 on s.city_id = c2.city_id
-        GROUP BY s.store_id;
+        GROUP BY s.store_id
+        ORDER BY clinets_number;
 
 ---------------------------------------
 -- Procedures/functions creation.
@@ -60,12 +61,13 @@ AS $$
 $$;
 
 -- Create default owner for the store.
-CREATE OR REPLACE PROCEDURE AddDefaultOwner(id_store INTEGER)
+CREATE OR REPLACE PROCEDURE adddefaultowner(id_store INTEGER)
 LANGUAGE SQL
 AS $$
     INSERT INTO card_owner(card_owner_id, first_name, last_name, discount, points, store_id)
         VALUES ((SELECT max(card_owner_id) FROM card_owner) + 1, 'Default', 'Default', 0, 0, id_store);
 $$;
+
 
 ---------------------------------------
 -- Triggers creation.
@@ -95,14 +97,14 @@ CREATE OR REPLACE TRIGGER tr_remove_owner
 ---------------------------------------
 
 /*
-DROP VIEW product_info;
-DROP VIEW card_owners_purchases;
-DROP VIEW card_owners_stores;
 DROP PROCEDURE AddNewCardOwner;
 DROP PROCEDURE AddDefaultOwner;
 DROP PROCEDURE DefaultCardOwner;
 DROP PROCEDURE UpdatePoints;
 DROP FUNCTION CalculatePoints;
+DROP VIEW product_info;
+DROP VIEW card_owners_purchases;
+DROP VIEW card_owners_stores;
 DROP TRIGGER tr_new_purchase_product;
 DROP TRIGGER tr_new_store;
 DROP TRIGGER tr_remove_owner;

@@ -45,6 +45,8 @@ INSERT INTO store(store_id, name, address, city_id)
     VALUES (5, 'Lowes', '222 Pine St', 2);
 INSERT INTO store(store_id, name, address, city_id)
     VALUES (6, 'Super-Giper', '22 Best St', 3);
+INSERT INTO store(store_id, name, address, city_id)
+    VALUES (7, 'Lenta', '22 Best St', 3);
 
 INSERT INTO Card_Owner (Card_Owner_ID, First_Name, Last_Name, Discount, Store_id, Points)
     VALUES (1, 'John', 'Doe', 0.2, 2, 0);
